@@ -1,11 +1,11 @@
-import type { RootState } from "../redux/store/store";
+import type { RootState } from "../../redux/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import {
   decrement,
   increment,
   increaseSagaStart,
   decreaseSagaStart,
-} from "../redux/slice/counter.slice";
+} from "../../redux/slice/counter.slice";
 
 const Counter = () => {
   const count = useSelector((state: RootState) => state.counter.value);
