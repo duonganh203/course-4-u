@@ -1,14 +1,12 @@
-import Counter from "./components/counter";
+import Counter from "./screens/user.screens/counter";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import HeaderHomepae from "./components/header";
-import FooterHomepage from "./components/footer";
+import HeaderHomepae from "./components/user.components/header";
 // import "./assets/css/App.css";
 const LayoutUser = () => {
     return (
         <div className='app-container'>
             <HeaderHomepae />
-            {/* <Outlet /> */}
-            <FooterHomepage />
+            <Outlet />
         </div>
     );
 };
@@ -29,3 +27,5 @@ const router = createBrowserRouter([
 function App() {
     return <>{<RouterProvider router={router} />}</>;
 }
+
+export default App;
