@@ -1,12 +1,14 @@
-import Counter from "./screens/user.screens/counter";
+import Counter from "./components/counter";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import HeaderHomepae from "./components/user.components/header";
+import HeaderHomepae from "./components/header";
+import FooterHomepage from "./components/footer";
 // import "./assets/css/App.css";
 const LayoutUser = () => {
     return (
         <div className='app-container'>
             <HeaderHomepae />
-            <Outlet />
+            {/* <Outlet /> */}
+            <FooterHomepage />
         </div>
     );
 };
