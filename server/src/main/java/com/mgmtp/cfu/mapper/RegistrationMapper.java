@@ -4,6 +4,9 @@ import com.mgmtp.cfu.DTO.RegistrationDTO;
 import com.mgmtp.cfu.entity.Registration;
 public class RegistrationMapper {
     public static RegistrationDTO toDto(Registration registration) {
+        if(registration == null) {
+            return null;
+        }
         return RegistrationDTO.builder()
                 .id(registration.getId())
                 .score(registration.getScore())
