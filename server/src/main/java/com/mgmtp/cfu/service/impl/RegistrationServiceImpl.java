@@ -2,6 +2,7 @@ package com.mgmtp.cfu.service.impl;
 
 import com.mgmtp.cfu.DTO.RegistrationDTO;
 import com.mgmtp.cfu.entity.Registration;
+import com.mgmtp.cfu.exception.RegistrationNotFoundException;
 import com.mgmtp.cfu.mapper.RegistrationMapper;
 import com.mgmtp.cfu.repository.RegistrationRepository;
 import com.mgmtp.cfu.service.RegistrationService;
@@ -17,7 +18,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public RegistrationDTO getDetailRegistration(Long id) {
-        Registration registration = registrationRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Registration not found"));
+        Registration registration = registrationRepository.findById(id).orElseThrow(() -> new RegistrationNotFoundException("Registration not found"));
         return RegistrationMapper.toDto(registration);
     }
 }
