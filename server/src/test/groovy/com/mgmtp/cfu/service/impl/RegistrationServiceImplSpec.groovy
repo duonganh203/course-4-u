@@ -2,7 +2,6 @@ package com.mgmtp.cfu.service.impl
 
 import com.mgmtp.cfu.DTO.RegistrationDTO
 import com.mgmtp.cfu.entity.Registration
-import com.mgmtp.cfu.exception.RegistrationNotFoundException
 import com.mgmtp.cfu.mapper.RegistrationMapper
 import spock.lang.Specification
 import com.mgmtp.cfu.repository.RegistrationRepository
@@ -40,7 +39,7 @@ class RegistrationServiceImplSpec extends Specification {
         when:
             registrationService.getDetailRegistration(id)
         then:
-            def ex = thrown(RegistrationNotFoundException)
+            def ex = thrown(NoSuchElementException)
             ex.message == "Registration not found"
     }
 }
