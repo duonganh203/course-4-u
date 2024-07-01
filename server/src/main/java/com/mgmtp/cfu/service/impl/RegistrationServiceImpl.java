@@ -8,6 +8,8 @@ import com.mgmtp.cfu.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 @AllArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
@@ -15,7 +17,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public RegistrationDTO getDetailRegistration(Long id) {
-        Registration registration = registrationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Registration not found"));
+        Registration registration = registrationRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Registration not found"));
         return RegistrationMapper.toDto(registration);
     }
 }
