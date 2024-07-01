@@ -1,6 +1,7 @@
 package com.mgmtp.cfu.controller
 
 import com.mgmtp.cfu.DTO.RegistrationDTO
+import com.mgmtp.cfu.exception.RegistrationNotFoundException
 import com.mgmtp.cfu.service.RegistrationService
 import org.springframework.http.ResponseEntity
 import spock.lang.Specification
@@ -26,11 +27,11 @@ class RegistrationControllerSpec extends Specification {
         given:
             Long id = 999L
         when:
-            registrationService.getDetailRegistration(id) >> { throw new NoSuchElementException("Registration not found") }
+            registrationService.getDetailRegistration(id) >> { throw new RegistrationNotFoundException("Registration not found") }
         and:
             registrationController.getDetailRegistration(id)
         then:
-            def ex = thrown(NoSuchElementException)
+            def ex = thrown(RegistrationNotFoundException)
             ex.message == "Registration not found"
     }
 }
