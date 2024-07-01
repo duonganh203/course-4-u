@@ -14,7 +14,7 @@ class RegistrationControllerSpec extends Specification {
         given:
             def registrationId = 1
             RegistrationDTO registrationDTO = RegistrationDTO.builder().build()
-            registrationService.getDetailRegistration(registrationId) >> registrationDTO;
+            registrationService.getDetailRegistration(registrationId) >> registrationDTO
         when:
             ResponseEntity<RegistrationDTO> response = registrationController.getDetailRegistration(registrationId)
         then:
