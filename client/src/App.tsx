@@ -1,6 +1,7 @@
 import Counter from "./screens/user.screens/counter";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import HeaderHomepae from "./components/user.components/header";
+import Registrations from "./components/user.components/registrations";
 // import "./assets/css/App.css";
 const LayoutUser = () => {
     return (
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Counter />,
+            },
+            {
+                path: "registrations/:id",
+                element: <Registrations />,
             },
         ],
     },
