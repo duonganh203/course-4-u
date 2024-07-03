@@ -1,6 +1,6 @@
 package com.mgmtp.cfu.controller
 
-import com.mgmtp.cfu.DTO.RegistrationDTO
+import com.mgmtp.cfu.dto.RegistrationDto
 import com.mgmtp.cfu.exception.RegistrationNotFoundException
 import com.mgmtp.cfu.service.RegistrationService
 import org.springframework.http.ResponseEntity
@@ -14,13 +14,13 @@ class RegistrationControllerSpec extends Specification {
     def "test getDetailRegistration"() {
         given:
             def registrationId = 1
-            RegistrationDTO registrationDTO = RegistrationDTO.builder().build()
-            registrationService.getDetailRegistration(registrationId) >> registrationDTO
+        RegistrationDto registrationDto = RegistrationDto.builder().build()
+            registrationService.getDetailRegistration(registrationId) >> registrationDto
         when:
-            ResponseEntity<RegistrationDTO> response = registrationController.getDetailRegistration(registrationId)
+            ResponseEntity<RegistrationDto> response = registrationController.getDetailRegistration(registrationId)
         then:
             response.statusCode.value() == 200
-            response.body == registrationDTO
+            response.body == registrationDto
     }
 
     def "test getDetailRegistration failed"() {

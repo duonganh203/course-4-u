@@ -1,6 +1,7 @@
 package com.mgmtp.cfu.service.impl
 
-import com.mgmtp.cfu.DTO.RegistrationDTO
+import com.mgmtp.cfu.dto.RegistrationDto
+import com.mgmtp.cfu.entity.Course
 import com.mgmtp.cfu.entity.Registration
 import com.mgmtp.cfu.exception.RegistrationNotFoundException
 import com.mgmtp.cfu.mapper.RegistrationMapper
@@ -13,23 +14,26 @@ class RegistrationServiceImplSpec extends Specification {
     def registrationRepository = Mock(RegistrationRepository) {
         findById(1) >> Optional.of(Registration.builder()
                 .id(1)
+                .course(Course.builder().id(1).build())
                 .build())
     }
-    def registrationMapper = Mock(RegistrationMapper)
-    RegistrationServiceImpl registrationService = new RegistrationServiceImpl(registrationRepository)
+    def registrationMapper = Mock(RegistrationMapper) {
+        toDto(_) >> RegistrationDto.builder().id(1).build()
+    }
+    RegistrationServiceImpl registrationService = new RegistrationServiceImpl(registrationRepository, registrationMapper)
 
     def "return registration details successfully"() {
         given:
-            Long id = 4L
+            Long id = 1L
             Registration registration = Registration.builder().id(id).build()
-            RegistrationDTO registrationDTO = RegistrationDTO.builder().id(id).build()
+            RegistrationDto registrationDto = RegistrationDto.builder().id(id).build()
 
             registrationRepository.findById(id) >> Optional.of(registration)
-            registrationMapper.toDto(registration) >> registrationDTO
+            registrationMapper.toDto(registration) >> registrationDto
         when:
-            RegistrationDTO result = registrationService.getDetailRegistration(id)
+            RegistrationDto result = registrationService.getDetailRegistration(id)
         then:
-            result.id == registrationDTO.id
+            result.id == registrationDto.id
     }
 
     def "return registration details failed"() {

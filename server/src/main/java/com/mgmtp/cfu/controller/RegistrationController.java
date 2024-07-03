@@ -1,6 +1,6 @@
 package com.mgmtp.cfu.controller;
 
-import com.mgmtp.cfu.DTO.RegistrationDTO;
+import com.mgmtp.cfu.dto.RegistrationDto;
 import com.mgmtp.cfu.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class RegistrationController {
     private final RegistrationService registrationService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<RegistrationDTO> getDetailRegistration(@PathVariable Long id) {
+    public ResponseEntity<RegistrationDto> getDetailRegistration(@PathVariable Long id) {
         return ResponseEntity.ok(registrationService.getDetailRegistration(id));
     }
 }

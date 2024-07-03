@@ -1,4 +1,4 @@
-package com.mgmtp.cfu.DTO;
+package com.mgmtp.cfu.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mgmtp.cfu.enums.RegistrationStatus;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @FieldDefaults(level= AccessLevel.PRIVATE)
-public class RegistrationDTO {
+public class RegistrationDto {
     Long id;
     RegistrationStatus status;
     LocalDate startDate;
@@ -20,4 +20,5 @@ public class RegistrationDTO {
     Integer score;
     LocalDate registerDate;
     Integer duration;
+    CourseRegistrationDto course;
 }

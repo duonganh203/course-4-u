@@ -1,7 +1,7 @@
 package com.mgmtp.cfu.service;
 
-import com.mgmtp.cfu.DTO.RegistrationDTO;
+import com.mgmtp.cfu.dto.RegistrationDto;
 
 public interface RegistrationService {
-    RegistrationDTO getDetailRegistration(Long id);
+    RegistrationDto getDetailRegistration(Long id);
 }
