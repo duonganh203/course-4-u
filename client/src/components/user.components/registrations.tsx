@@ -27,9 +27,10 @@ const Registrations = () => {
             </h2>
             <RegistrationsForm
                 id={+id}
-                category={registration?.category}
                 duration={registration?.duration}
                 durationUnit={registration?.durationUnit}
+                level={"BEGINNER"}
+                link={registration?.link}
             />
         </div>
     );
