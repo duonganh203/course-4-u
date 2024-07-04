@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import Cropper from "react-easy-crop";
+import Cropper, { Point } from "react-easy-crop";
 import { Button } from "../ui/button";
 import getCroppedImg from "../../utils/cropImage";
 import {
@@ -41,18 +41,21 @@ export const CropThumbnail = ({
     if (cropInit == null) cropInit = { x: 0, y: 0 };
     if (aspectInit == null) aspectInit = { value: 12 / 8, text: "12/8" };
     const [zoom, setZoom] = useState(zoomInit);
-    const [crop, setCrop] = useState(cropInit);
+    const [crop, setCrop] = useState<Point>(cropInit);
+    // @ts-ignore
     const [aspect, setAspect] = useState(aspectInit);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    // @ts-ignore
     const onCropChange = (crop) => {
         setCrop(crop);
     };
     const onOpen = () => {
         setIsOpen(!isOpen);
     };
-    const onZoomChange = (zoom) => {
+    const onZoomChange = (zoom: number) => {
         setZoom(zoom);
     };
+    // @ts-ignore
     const onCropComplete = (croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
     };
@@ -61,10 +64,11 @@ export const CropThumbnail = ({
             imageUrl,
             croppedAreaPixels
         );
+        // @ts-ignore
         setCroppedImageFor(crop, zoom, aspect, croppedImageUrl);
     };
     const onResetImage = () => {
-        setCroppedImageFor(cropInit, zoomInit, aspectInit, imageUrl);
+        setCroppedImageFor(cropInit, zoomInit, aspectInit, imageUrl!);
     };
     return (
         <Dialog open={isOpen} onOpenChange={onOpen}>
@@ -80,7 +84,7 @@ export const CropThumbnail = ({
                 </DialogHeader>
                 <div className='fixed top-[80px] left-0 right-0 bottom-[80px]'>
                     <Cropper
-                        image={imageUrl}
+                        image={imageUrl!}
                         crop={crop}
                         zoom={zoom}
                         objectFit='contain'

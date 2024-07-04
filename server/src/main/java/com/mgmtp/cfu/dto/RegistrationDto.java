@@ -16,7 +16,7 @@ public class RegistrationDto {
     Long id;
     RegistrationStatus status;
     LocalDate startDate;
-    LocalDate endDate;
+    LocalDate endDate; 
     Integer score;
     LocalDate registerDate;
     Integer duration;

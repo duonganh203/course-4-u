@@ -4,12 +4,15 @@ import instance from "../../utils/customizeAxios";
 import { RegistrationsForm } from "../form/registration-form";
 import { z } from "zod";
 import { registrationSchema } from "../../schemas/registration-schema";
+import { cn } from "../../utils/utils";
 
 type RegistrationsProps = z.infer<typeof registrationSchema> & {
     id?: number;
 };
-
-const Registrations = () => {
+type Props = {
+    className?: string;
+};
+const Registrations = ({ className }: Props) => {
     const id = useLocation().pathname.split("/")[2];
     const [registration, setRegistration] = useState<RegistrationsProps | null>(
         null
@@ -21,7 +24,12 @@ const Registrations = () => {
         });
     }, [id]);
     return (
-        <div className='w-[1352px] pt-5 pb-10 px-10 flex flex-col items-center gap-5 rounded-[30px] mx-auto my-8 border-gray-300 border-2'>
+        <div
+            className={cn(
+                "w-[1352px] pt-5 pb-10 px-10 flex flex-col items-center gap-5 rounded-[30px] mx-auto my-8 border-gray-300 border-2",
+                className
+            )}
+        >
             <h2 className='text-[#1E293B] text-[40px] tracking-tighter leading-8 font-semibold font-inter'>
                 Detail of registration
             </h2>

@@ -19,8 +19,16 @@ import {
 import { Upload } from "lucide-react";
 import { Button } from "../ui/button";
 import { CropThumbnail } from "../user.components/crop-thumbnail";
+import { z } from "zod";
+import { UseFormReturn } from "react-hook-form";
+import { registrationSchema } from "../../schemas/registration-schema";
+
+const courseSchema = registrationSchema.omit({
+    duration: true,
+    durationUnit: true,
+});
 type Props = {
-    form?: any;
+    form: UseFormReturn<z.infer<typeof courseSchema>> | undefined;
 };
 
 const categoryOptions: Option[] = [
@@ -39,6 +47,9 @@ const categoryOptions: Option[] = [
 type Thumbnail = {
     imageUrl: string | null;
     croppedImageUrl: string | null;
+    crop?: { x: number; y: number };
+    zoom?: number;
+    aspect?: { value: number; text: string };
 };
 const initData: Thumbnail = {
     imageUrl: null,
@@ -53,15 +64,18 @@ export const CourseForm = ({ form }: Props) => {
         const file = new FileReader();
         file.onload = () => {
             setThumbnail({ ...thumbnail, imageUrl: file.result as string });
-            form.setValue("thumbnail", file.result as string);
+            form!.setValue("thumbnail", file.result as string);
             setIsOpen(true);
         };
 
         file.readAsDataURL(acceptedFiles[0]);
     }, []);
+    //eslint-disable-next-line
+    // @ts-ignore
+    //eslint-disable-next-line
     const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
         useDropzone({
-            //@ts-ignore
+            //@ts-expect-error
             onDrop,
             accept: {
                 "image/jpeg": [".jpg", ".jpeg"],
@@ -71,8 +85,9 @@ export const CourseForm = ({ form }: Props) => {
         });
     const onDeleteImage = () => {
         setThumbnail({ ...thumbnail, imageUrl: null });
-        form.setValue("thumbnail", "");
+        form!.setValue("thumbnail", "");
     };
+    //@ts-expect-error
     const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
         const newThumbnail = {
             ...thumbnail,
@@ -82,14 +97,14 @@ export const CourseForm = ({ form }: Props) => {
             croppedImageUrl,
         };
         setThumbnail(newThumbnail);
-        form.setValue("thumbnail", croppedImageUrl);
+        form!.setValue("thumbnail", croppedImageUrl);
         setIsOpen(false);
     };
     return (
         <>
             <div>
                 <FormField
-                    control={form.control}
+                    control={form!.control}
                     name='name'
                     render={({ field }) => (
                         <FormItem>
@@ -110,7 +125,7 @@ export const CourseForm = ({ form }: Props) => {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={form!.control}
                     name='teacherName'
                     render={({ field }) => (
                         <FormItem>
@@ -131,7 +146,7 @@ export const CourseForm = ({ form }: Props) => {
                     )}
                 />
                 <FormField
-                    control={form.control}
+                    control={form!.control}
                     name='link'
                     render={({ field }) => (
                         <FormItem>
@@ -155,7 +170,7 @@ export const CourseForm = ({ form }: Props) => {
                 <div className='w-[60%] flex justify-between flex-col'>
                     <div className='flex gap-4'>
                         <FormField
-                            control={form.control}
+                            control={form!.control}
                             name='platform'
                             render={({ field }) => (
                                 <FormItem className='w-[50%]'>
@@ -189,7 +204,7 @@ export const CourseForm = ({ form }: Props) => {
                             )}
                         />
                         <FormField
-                            control={form.control}
+                            control={form!.control}
                             name='level'
                             render={({ field }) => (
                                 <FormItem className='w-[50%]'>
@@ -221,7 +236,7 @@ export const CourseForm = ({ form }: Props) => {
                         />
                     </div>
                     <FormField
-                        control={form.control}
+                        control={form!.control}
                         name='category'
                         render={({ field }) => (
                             <FormItem>
@@ -243,9 +258,9 @@ export const CourseForm = ({ form }: Props) => {
                     {thumbnail.imageUrl ? (
                         <CropThumbnail
                             imageUrl={thumbnail.imageUrl}
-                            cropInit={thumbnail.crop}
-                            zoomInit={thumbnail.zoom}
-                            aspectInit={thumbnail.aspect}
+                            cropInit={thumbnail.crop!}
+                            zoomInit={thumbnail.zoom!}
+                            aspectInit={thumbnail.aspect!}
                             isOpen={isOpen}
                             setIsOpen={setIsOpen}
                             setCroppedImageFor={setCroppedImageFor}
@@ -266,7 +281,7 @@ export const CourseForm = ({ form }: Props) => {
                         </CropThumbnail>
                     ) : (
                         <FormField
-                            control={form.control}
+                            control={form!.control}
                             name='thumbnail'
                             render={({ field }) => (
                                 <FormItem className='w-full h-full'>

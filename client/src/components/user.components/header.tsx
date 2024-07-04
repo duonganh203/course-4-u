@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import imageLogo from "../../assets/images/logo_c4u.svg";
+import { RegistrationModal } from "../modal/registration-modal";
 const HeaderHomepae: React.FC = () => {
     const [isDropdownAvatarOpen, setIsDropdownAvatarOpen] = useState(false);
 
@@ -65,9 +66,12 @@ const HeaderHomepae: React.FC = () => {
 
                 <div className='flex items-center space-x-4'>
                     <div className='flex items-center justify-center gap-5'>
-                        <button className='w-44 h-11 border border-gray-300 rounded-lg bg-purple-700 text-white font-semibold'>
-                            Create a registration
-                        </button>
+                        <RegistrationModal>
+                            <button className='w-44 h-11 border border-gray-300 rounded-lg bg-purple-700 text-white font-semibold'>
+                                Create a registration
+                            </button>
+                        </RegistrationModal>
+
                         <div className='flex items-center gap-6'>
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'

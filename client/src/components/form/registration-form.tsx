@@ -55,7 +55,10 @@ export const RegistrationsForm = ({ id }: Props) => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                <CourseForm form={form} />
+                <CourseForm
+                    //@ts-ignore
+                    form={form}
+                />
                 <div className='flex w-[60%] pr-4 gap-2'>
                     <FormField
                         control={form.control}
