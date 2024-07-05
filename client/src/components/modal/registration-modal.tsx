@@ -1,4 +1,9 @@
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import {
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    DialogTrigger,
+} from "../ui/dialog";
 import Registrations from "../user.components/registrations";
 
 type Props = {
@@ -7,8 +12,9 @@ type Props = {
 export const RegistrationModal = ({ children }: Props) => {
     return (
         <Dialog>
-            <DialogTrigger>{children}</DialogTrigger>
+            <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent className='max-w-[1500px] w-fit p-0 rounded-xl'>
+                <DialogTitle></DialogTitle>
                 <Registrations className='border-0' />
             </DialogContent>
         </Dialog>

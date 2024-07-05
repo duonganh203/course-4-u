@@ -3,11 +3,16 @@ import { useLocation } from "react-router-dom";
 import instance from "../../utils/customizeAxios";
 import { RegistrationsForm } from "../form/registration-form";
 import { z } from "zod";
-import { registrationSchema } from "../../schemas/registration-schema";
 import { cn } from "../../utils/utils";
+import { courseSchema } from "../../schemas/course-schema";
+import { Status } from "../../utils";
 
-type RegistrationsProps = z.infer<typeof registrationSchema> & {
+export type RegistrationsProps = {
     id?: number;
+    duration?: number;
+    durationUnit?: "DAY" | "WEEK" | "MONTH";
+    status?: Status;
+    course?: z.infer<typeof courseSchema>;
 };
 type Props = {
     className?: string;
@@ -18,10 +23,14 @@ const Registrations = ({ className }: Props) => {
         null
     );
     useEffect(() => {
-        instance.get(`/registrations/${id}`).then((res) => {
-            console.log(res.data);
-            setRegistration(res.data);
-        });
+        const getDetailRegistration = async () => {
+            if (!id) return;
+            await instance.get(`/registrations/${id}`).then((res) => {
+                console.log(res.data);
+                setRegistration(res.data);
+            });
+        };
+        getDetailRegistration();
     }, [id]);
     return (
         <div
@@ -35,10 +44,10 @@ const Registrations = ({ className }: Props) => {
             </h2>
             <RegistrationsForm
                 id={+id}
-                duration={registration?.duration}
-                durationUnit={registration?.durationUnit}
-                level={"BEGINNER"}
-                link={registration?.link}
+                duration={id ? registration?.duration : undefined}
+                durationUnit={id ? registration?.durationUnit : undefined}
+                status={id ? registration?.status : undefined}
+                course={id ? registration?.course : undefined}
             />
         </div>
     );

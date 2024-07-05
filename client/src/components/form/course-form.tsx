@@ -29,6 +29,7 @@ const courseSchema = registrationSchema.omit({
 });
 type Props = {
     form: UseFormReturn<z.infer<typeof courseSchema>> | undefined;
+    course?: z.infer<typeof courseSchema>;
 };
 
 const categoryOptions: Option[] = [
@@ -55,7 +56,7 @@ const initData: Thumbnail = {
     imageUrl: null,
     croppedImageUrl: null,
 };
-export const CourseForm = ({ form }: Props) => {
+export const CourseForm = ({ form, course }: Props) => {
     const [thumbnail, setThumbnail] = useState<Thumbnail>(initData);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -75,6 +76,7 @@ export const CourseForm = ({ form }: Props) => {
     //eslint-disable-next-line
     const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
         useDropzone({
+            //eslint-disable-next-line
             //@ts-expect-error
             onDrop,
             accept: {
@@ -87,6 +89,7 @@ export const CourseForm = ({ form }: Props) => {
         setThumbnail({ ...thumbnail, imageUrl: null });
         form!.setValue("thumbnail", "");
     };
+    //eslint-disable-next-line
     //@ts-expect-error
     const setCroppedImageFor = (crop, zoom, aspect, croppedImageUrl) => {
         const newThumbnail = {
@@ -177,7 +180,8 @@ export const CourseForm = ({ form }: Props) => {
                                     <FormLabel>Platform</FormLabel>
                                     <Select
                                         onValueChange={field.onChange}
-                                        defaultValue={field.value}
+                                        defaultValue={course?.platform}
+                                        value={course?.platform}
                                     >
                                         <FormControl>
                                             <SelectTrigger>

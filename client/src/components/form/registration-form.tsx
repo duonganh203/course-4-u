@@ -20,21 +20,19 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
-type Props = {
-    id?: number;
-    name?: string;
-    teacherName?: string;
-    link?: string;
-    level?: string;
-    platform?: string;
-    category?: string[];
-    duration?: number;
-    durationUnit?: string;
-    thumbnail?: string;
-};
-export const RegistrationsForm = ({ id }: Props) => {
+
+import { useEffect } from "react";
+import { RegistrationsProps } from "../user.components/registrations";
+
+export const RegistrationsForm = ({
+    id,
+    duration,
+    durationUnit,
+    course,
+}: RegistrationsProps) => {
     const form = useForm<z.infer<typeof registrationSchema>>({
         resolver: zodResolver(registrationSchema),
+        mode: "onBlur",
         defaultValues: {
             name: "",
             teacherName: "",
@@ -43,11 +41,22 @@ export const RegistrationsForm = ({ id }: Props) => {
             platform: "",
             category: [],
             duration: 1,
-            durationUnit: "DAYS",
+            durationUnit: "DAY",
             thumbnail: "",
         },
     });
+    useEffect(() => {
+        if (id) {
+            form.setValue("duration", duration!);
+            form.setValue("durationUnit", durationUnit || "DAY");
+            form.setValue("platform", course?.platform || "");
+            form.setValue("name", course?.name || "");
+            form.setValue("teacherName", course?.teacherName || "");
+            form.setValue("link", course?.link || "");
+        }
+    }, [course, duration, durationUnit, form, id]);
     function onSubmit(values: z.infer<typeof registrationSchema>) {
+        console.log(name);
         console.log(values);
         console.log(id);
     }
@@ -56,8 +65,10 @@ export const RegistrationsForm = ({ id }: Props) => {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
                 <CourseForm
-                    //@ts-ignore
+                    //eslint-disable-next-line
+                    // @ts-ignore
                     form={form}
+                    course={course}
                 />
                 <div className='flex w-[60%] pr-4 gap-2'>
                     <FormField
@@ -100,13 +111,13 @@ export const RegistrationsForm = ({ id }: Props) => {
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        <SelectItem value='DAYS'>
+                                        <SelectItem value='DAY'>
                                             Days
                                         </SelectItem>
-                                        <SelectItem value='WEEKS'>
+                                        <SelectItem value='WEEK'>
                                             Weeks
                                         </SelectItem>
-                                        <SelectItem value='MONTHS'>
+                                        <SelectItem value='MONTH'>
                                             Months
                                         </SelectItem>
                                     </SelectContent>
