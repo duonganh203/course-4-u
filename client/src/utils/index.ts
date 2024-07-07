@@ -1,4 +1,5 @@
 export enum Status {
+    NONE = "NONE",
     DRAFT = "DRAFT",
     SUBMITTED = "SUBMITTED",
     DECLINED = "DECLINED",

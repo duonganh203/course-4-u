@@ -11,7 +11,6 @@ import {
     FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { CourseForm } from "./course-form";
 import {
     Select,
@@ -23,11 +22,13 @@ import {
 
 import { useEffect } from "react";
 import { RegistrationsProps } from "../user.components/registrations";
+import { RegistrationButton } from "../user.components/registration-button";
 
 export const RegistrationsForm = ({
     id,
     duration,
     durationUnit,
+    status,
     course,
 }: RegistrationsProps) => {
     const form = useForm<z.infer<typeof registrationSchema>>({
@@ -128,11 +129,7 @@ export const RegistrationsForm = ({
                         )}
                     />
                 </div>
-                <div className='flex justify-end'>
-                    <Button type='submit' size='lg' variant='success'>
-                        Submit
-                    </Button>
-                </div>
+                <RegistrationButton status={status!} />
             </form>
         </Form>
     );

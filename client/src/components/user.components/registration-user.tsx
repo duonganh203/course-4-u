@@ -18,10 +18,12 @@ export const RegistrationUser = ({
                 alt='avatar'
                 className='w-[74px] h-[74px] rounded-full'
             />
-            <div className='flex flex-col gap-2'>
-                <h4>{fullName}</h4>
-                <p>{email}</p>
-                <p>{telephone}</p>
+            <div className='flex flex-col'>
+                <h4 className='font-semibold text-base text-muted-foreground'>
+                    {fullName}
+                </h4>
+                <p className='text-muted-foreground'>{email}</p>
+                <p className='text-muted-foreground'>{telephone}</p>
             </div>
         </div>
     );
