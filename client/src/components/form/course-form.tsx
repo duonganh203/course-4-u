@@ -105,7 +105,7 @@ export const CourseForm = ({ form, course }: Props) => {
     };
     return (
         <>
-            <div>
+            <div className='space-y-4'>
                 <FormField
                     control={form!.control}
                     name='name'

@@ -1,19 +1,17 @@
-type ImageType =
-    | {
-          width: any;
-          height: any;
-      }
-    | any;
-const createImage = (url: any) =>
-    new Promise((resolve, reject) => {
-        const image = new Image();
+type ImageType = {
+    width: number;
+    height: number;
+};
+const createImage = (url: string) =>
+    new Promise<ImageType>((resolve, reject) => {
+        const image: CanvasImageSource = new Image();
         image.addEventListener("load", () => resolve(image));
         image.addEventListener("error", (error) => reject(error));
         image.setAttribute("crossOrigin", "anonymous"); // needed to avoid cross-origin issues on CodeSandbox
         image.src = url;
     });
 
-function getRadianAngle(degreeValue: any) {
+function getRadianAngle(degreeValue: number) {
     return (degreeValue * Math.PI) / 180;
 }
 
@@ -25,8 +23,8 @@ function getRadianAngle(degreeValue: any) {
  */
 
 export default async function getCroppedImg(
-    imageSrc: any,
-    pixelCrop: any,
+    imageSrc: string,
+    pixelCrop: { x: number; y: number; width: number; height: number },
     rotation = 0
 ) {
     const image: ImageType = await createImage(imageSrc);
@@ -48,7 +46,7 @@ export default async function getCroppedImg(
 
     // draw rotated image and store data.
     ctx?.drawImage(
-        image!,
+        image as CanvasImageSource,
         safeArea / 2 - image!.width * 0.5,
         safeArea / 2 - image!.height * 0.5
     );

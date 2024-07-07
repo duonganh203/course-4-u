@@ -56,14 +56,15 @@ export const RegistrationsForm = ({
         }
     }, [course, duration, durationUnit, form, id]);
     function onSubmit(values: z.infer<typeof registrationSchema>) {
-        console.log(name);
         console.log(values);
-        console.log(id);
     }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className='space-y-8 w-full '
+            >
                 <CourseForm
                     //eslint-disable-next-line
                     // @ts-ignore
