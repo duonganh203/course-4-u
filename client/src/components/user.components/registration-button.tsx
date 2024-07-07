@@ -7,7 +7,9 @@ type Props = {
 export const RegistrationButton = ({ status = Status.NONE }: Props) => {
     return (
         <div className='flex justify-end gap-4'>
-            {(status === Status.DRAFT || status === Status.DISCARDED) && (
+            {(status === Status.DRAFT ||
+                status === Status.DISCARDED ||
+                status === Status.CLOSED) && (
                 <Button size='lg' variant='danger'>
                     DELETE
                 </Button>
@@ -37,6 +39,16 @@ export const RegistrationButton = ({ status = Status.NONE }: Props) => {
             {(status === Status.NONE || status === Status.DRAFT) && (
                 <Button type='submit' size='lg' variant='success'>
                     SUBMIT
+                </Button>
+            )}
+            {(status === Status.DONE || status === Status.VERIFIED) && (
+                <Button size='lg' variant='purple'>
+                    SEND FEEDBACK
+                </Button>
+            )}
+            {status === Status.DONE && (
+                <Button size='lg' variant='blue'>
+                    ASSIGN TO REVIEW
                 </Button>
             )}
         </div>
