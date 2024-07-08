@@ -30,6 +30,7 @@ export const RegistrationsForm = ({
     durationUnit,
     status,
     course,
+    isEdit,
 }: RegistrationsProps) => {
     const form = useForm<z.infer<typeof registrationSchema>>({
         resolver: zodResolver(registrationSchema),
@@ -71,6 +72,7 @@ export const RegistrationsForm = ({
                     // @ts-ignore
                     form={form}
                     course={course}
+                    isEdit={isEdit}
                 />
                 <div className='flex w-[60%] pr-4 gap-2'>
                     <FormField
@@ -91,6 +93,7 @@ export const RegistrationsForm = ({
                                             field.onChange(+event.target.value)
                                         }
                                         className=''
+                                        disabled={!isEdit}
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -106,6 +109,7 @@ export const RegistrationsForm = ({
                                 <Select
                                     onValueChange={field.onChange}
                                     defaultValue={field.value}
+                                    disabled={!isEdit}
                                 >
                                     <FormControl>
                                         <SelectTrigger>

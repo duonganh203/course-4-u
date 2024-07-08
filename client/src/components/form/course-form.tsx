@@ -30,6 +30,7 @@ const courseSchema = registrationSchema.omit({
 type Props = {
     form: UseFormReturn<z.infer<typeof courseSchema>> | undefined;
     course?: z.infer<typeof courseSchema>;
+    isEdit?: boolean;
 };
 
 const categoryOptions: Option[] = [
@@ -56,7 +57,7 @@ const initData: Thumbnail = {
     imageUrl: null,
     croppedImageUrl: null,
 };
-export const CourseForm = ({ form, course }: Props) => {
+export const CourseForm = ({ form, course, isEdit }: Props) => {
     const [thumbnail, setThumbnail] = useState<Thumbnail>(initData);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -121,6 +122,7 @@ export const CourseForm = ({ form, course }: Props) => {
                                     {...field}
                                     className='w-full'
                                     maxValue={80}
+                                    disabled={!isEdit}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -142,6 +144,7 @@ export const CourseForm = ({ form, course }: Props) => {
                                     {...field}
                                     className='w-full'
                                     maxValue={80}
+                                    disabled={!isEdit}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -162,6 +165,7 @@ export const CourseForm = ({ form, course }: Props) => {
                                     placeholder='Course Link'
                                     {...field}
                                     className='w-full'
+                                    disabled={!isEdit}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -182,6 +186,7 @@ export const CourseForm = ({ form, course }: Props) => {
                                         onValueChange={field.onChange}
                                         defaultValue={course?.platform}
                                         value={course?.platform}
+                                        disabled={!isEdit}
                                     >
                                         <FormControl>
                                             <SelectTrigger>
@@ -216,6 +221,7 @@ export const CourseForm = ({ form, course }: Props) => {
                                     <Select
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
+                                        disabled={!isEdit}
                                     >
                                         <FormControl>
                                             <SelectTrigger>
@@ -251,6 +257,7 @@ export const CourseForm = ({ form, course }: Props) => {
                                         defaultOptions={categoryOptions}
                                         placeholder='Select category you like...'
                                         creatable={true}
+                                        disabled={!isEdit}
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -329,7 +336,7 @@ export const CourseForm = ({ form, course }: Props) => {
                         </p>
                         <Button
                             className='text-[#861FA2] bg-violet-600/20 hover:bg-violet-100 translate-y-6'
-                            disabled={!thumbnail.imageUrl}
+                            disabled={!thumbnail.imageUrl || !isEdit}
                             type='button'
                             onClick={onDeleteImage}
                         >

@@ -16,11 +16,13 @@ export type RegistrationsProps = {
     durationUnit?: "DAY" | "WEEK" | "MONTH";
     status?: Status;
     course?: z.infer<typeof courseSchema>;
+    isEdit?: boolean;
 };
 type Props = {
     className?: string;
 };
 const Registrations = ({ className }: Props) => {
+    const [isEdit, setIsEdit] = useState(true);
     const id = useLocation().pathname.split("/")[2];
     const [registration, setRegistration] = useState<RegistrationsProps | null>(
         null
@@ -32,12 +34,16 @@ const Registrations = ({ className }: Props) => {
             setIsLoading(true);
             await instance.get(`/registrations/${id}`).then((res) => {
                 console.log(res.data);
-
+                if (res.data.status === "DRAFT" || res.data.status === "NONE") {
+                    setIsEdit(true);
+                } else {
+                    setIsEdit(false);
+                }
                 setRegistration(res.data);
             });
             setTimeout(() => {
                 setIsLoading(false);
-            }, 2000);
+            }, 1000);
         };
         getDetailRegistration();
     }, [id]);
@@ -67,6 +73,7 @@ const Registrations = ({ className }: Props) => {
                 durationUnit={id ? registration?.durationUnit : undefined}
                 status={id ? registration?.status : undefined}
                 course={id ? registration?.course : undefined}
+                isEdit={isEdit}
             />
         </div>
     );
