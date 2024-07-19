@@ -6,7 +6,7 @@ import com.mgmtp.cfu.dto.coursedto.CourseRequest;
 import com.mgmtp.cfu.dto.coursedto.CourseResponse;
 import com.mgmtp.cfu.entity.Category;
 import com.mgmtp.cfu.entity.Course;
-import com.mgmtp.cfu.exception.BadRequestRunTimeException;
+import com.mgmtp.cfu.exception.BadRequestRuntimeException;
 import com.mgmtp.cfu.exception.CourseNotFoundException;
 import com.mgmtp.cfu.enums.CoursePageSortOption;
 import com.mgmtp.cfu.enums.CourseStatus;
@@ -161,9 +161,9 @@ public class CourseServiceImpl implements CourseService {
                 if (isRemovableCourse(id))
                     courseRepository.deleteById(id);
                  else
-                    throw new BadRequestRunTimeException("Course can't be removed. It was registered by someone.");
+                    throw new BadRequestRuntimeException("Course can't be removed. It was registered by someone.");
             } else
-                throw new BadRequestRunTimeException("Course don't exist.");
+                throw new BadRequestRuntimeException("Course don't exist.");
         } catch (DataAccessException e) {
             throw new ServerErrorRuntimeException(e.getMessage());
         }

@@ -19,4 +19,6 @@ public interface RegistrationService {
     Page<RegistrationOverviewDTO> getRegistrationByStatus(int page, String status);
     void approveRegistration(Long id);
     void declineRegistration(Long id , FeedbackRequest feedbackRequest);
+
+    boolean startLearningCourse(Long courseId);
 }

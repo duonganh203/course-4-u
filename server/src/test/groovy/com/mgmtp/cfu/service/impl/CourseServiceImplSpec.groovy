@@ -303,7 +303,7 @@ class CourseServiceImplSpec extends Specification {
         when:
         courseService.deleteCourseById(1)
         then:
-        def ex = thrown(BadRequestRunTimeException)
+        def ex = thrown(BadRequestRuntimeException)
         ex.getMessage() == "Course don't exist."
     }
 
@@ -314,7 +314,7 @@ class CourseServiceImplSpec extends Specification {
         when:
         courseService.deleteCourseById(1)
         then:
-        def ex = thrown(BadRequestRunTimeException)
+        def ex = thrown(BadRequestRuntimeException)
 
         ex.getMessage() == "Course can't be removed. It was registered by someone."
     }

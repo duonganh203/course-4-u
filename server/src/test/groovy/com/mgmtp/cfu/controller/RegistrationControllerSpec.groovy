@@ -3,6 +3,7 @@ package com.mgmtp.cfu.controller
 import com.mgmtp.cfu.dto.registrationdto.FeedbackRequest
 import com.mgmtp.cfu.dto.registrationdto.RegistrationDetailDTO
 import com.mgmtp.cfu.exception.RegistrationNotFoundException
+import com.mgmtp.cfu.exception.UnknownErrorException
 import com.mgmtp.cfu.service.RegistrationService
 import org.springframework.http.ResponseEntity
 import spock.lang.Specification
@@ -38,7 +39,7 @@ class RegistrationControllerSpec extends Specification {
 
     def 'getListOfMyRegistration: return ok response'(){
         given:
-        registrationService.getMyRegistrationPage(_,_)>>List.of()
+        registrationService.getMyRegistrationPage(_ as int, _ as String)>>List.of()
         when:
         def response=registrationController.getListOfMyRegistration(page,status);
         then:
@@ -81,5 +82,12 @@ class RegistrationControllerSpec extends Specification {
         then:
             response.statusCode.value() == 200
     }
-
+    def'startLearningCourse return exception'(){
+        given:
+        registrationService.startLearningCourse(_ as Long)>> false
+        when:
+        registrationController.startLearningCourse(1)
+        then:
+        def ex=thrown(UnknownErrorException)
+    }
 }
