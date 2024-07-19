@@ -72,6 +72,12 @@ class RegistrationServiceImplSpec extends Specification {
             emailService, courseService
     );
 
+    def setup() {
+        def authentication = Mock(Authentication) {
+            getCredentials() >> User.builder().id(1).build()
+        }
+        SecurityContextHolder.context.authentication = authentication
+    }
     def "return registration details successfully"() {
         given:
         Long id = 1L
